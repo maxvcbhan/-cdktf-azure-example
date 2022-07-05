@@ -1,8 +1,12 @@
 import {Construct} from "constructs";
 import {App, AzurermBackend, TerraformStack} from "cdktf";
 import {
+	AppServicePlan,
 	AzurermProvider,
-	CosmosdbAccount, CosmosdbMongoCollection, CosmosdbMongoDatabase,
+	CosmosdbAccount,
+	CosmosdbMongoCollection,
+	CosmosdbMongoDatabase,
+	LinuxWebApp,
 	StorageAccount,
 	StorageBlob,
 	StorageContainer
@@ -123,7 +127,7 @@ class MyStack extends TerraformStack {
 			accountName: cosmosdbAccount.name,
 			name: `${baseNameApplication}-db`
 		})
-		const collectionNames = ["questionnaires", "files", "users", "assessment"];
+		const collectionNames = ["questionnaires", "files", "users", "assessment-module"];
 		collectionNames.map((collectionName) => {
 			return new CosmosdbMongoCollection(this, `${baseNameApplication}-${collectionName}`, {
 				name: collectionName,
@@ -133,6 +137,33 @@ class MyStack extends TerraformStack {
 				databaseName: cosmosdbMongoDatabase.name
 			})
 		})
+		const appServicePlan = new AppServicePlan(this, `${baseNameApplication}-plan`, {
+			resourceGroupName: resourceGroupName,
+			name: `${baseNameApplication}`,
+			kind: "Linux",
+			reserved: true,
+			location: "Central US",
+			sku: {
+				tier: "Basic",
+				size: "B1"
+			}
+		})
+		new LinuxWebApp(this, `${baseNameApplication}-app-service`, {
+			name: `${baseNameApplication}`,
+			servicePlanId: appServicePlan.id,
+			location: "Central US",
+			resourceGroupName: resourceGroupName,
+			appSettings: {
+				NODE_ENV: "production"
+			},
+			siteConfig: {
+				applicationStack: {
+					dockerImage: "docker.io/nginx",
+					dockerImageTag: "latest"
+				}
+			},
+		})
+
 	}
 }
 
