@@ -148,7 +148,12 @@ class MyStack extends TerraformStack {
         name: `${baseNameApplication}-db`,
       },
     );
-    const collectionNames = ['questionnaires', 'files', 'users', 'application'];
+    const collectionNames = [
+      'questionnaires',
+      'files',
+      'users',
+      'applications',
+    ];
     collectionNames.map((collectionName) => {
       return new CosmosdbMongoCollection(
         this,
