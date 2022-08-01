@@ -1,1 +1,1 @@
-# -cdktf-azure-example
+# cdktf-azure-example
