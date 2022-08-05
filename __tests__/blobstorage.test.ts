@@ -1,6 +1,6 @@
 import 'cdktf/lib/testing/adapters/jest'; // Load types for expect matchers
 import { Testing } from 'cdktf';
-import { BlobStorage } from '../storage/blobstorage';
+import { BlobStorageConfig } from '../storage/blobStorageConfig';
 import {
 	ResourceGroup,
 	StorageAccount, StorageBlob,
@@ -11,10 +11,10 @@ describe('My CDKTF Application', () => {
 
 	describe('Block storage', () => {
 		const stack = Testing.synthScope((scope) => {
-			new BlobStorage(scope, 'my-app-under-test', 'mock-storage-account-name',
+			new BlobStorageConfig(scope, 'my-app-under-test', 'mock-storage-account-name','mock-base-app',
 				new ResourceGroup(scope, 'acc', {
 					location: 'mock-location', name: 'mock-name',
-				}), 'mock-base-app');
+				}));
 		});
 
 		it('should contain a storage account', () => {

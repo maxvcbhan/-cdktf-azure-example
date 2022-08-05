@@ -10,41 +10,45 @@ import {
 import { ResourceGroup } from '@cdktf/provider-azurerm/lib/resource-group';
 
 
-export class BlobStorage extends Construct {
+export class BlobStorageConfig extends Construct {
+	public readonly container: StorageContainer;
+	public readonly storageAccount: StorageAccount;
+	public readonly storageConfig: StorageAccountConfig;
+	public readonly storageBlob: StorageBlob;
 
 	constructor(scope: Construct, name: string,
 				storageAccountName: string,
-				resourceGroup: ResourceGroup,
 				baseNameApplication: string,
+				resourceGroup: ResourceGroup,
 	) {
 		super(scope, name);
 
-		const storageConfig: StorageAccountConfig = {
+		this.storageConfig = {
 			accountTier: 'Standard',
 			resourceGroupName: resourceGroup.name,
 			name: storageAccountName,
 			location: resourceGroup.location,
 			accountReplicationType: 'LRS',
 		};
-		const sa = new StorageAccount(
+		this.storageAccount = new StorageAccount(
 			this,
 			`${baseNameApplication}-storage-account`,
-			storageConfig,
+			this.storageConfig,
 		);
-		const container: StorageContainer = new StorageContainer(
+		this.container = new StorageContainer(
 			this,
 			`${baseNameApplication}-blob-container`,
 			{
 				name: `${baseNameApplication}-container`,
 				containerAccessType: 'container',
-				storageAccountName: sa.name,
+				storageAccountName: this.storageAccount.name,
 			},
 		);
-		new StorageBlob(this, `${baseNameApplication}-blob`, {
+		this.storageBlob = new StorageBlob(this, `${baseNameApplication}-blob`, {
 			accessTier: 'Cool',
-			storageAccountName: sa.name,
+			storageAccountName: this.storageAccount.name,
 			name: 'document',
-			storageContainerName: container.name,
+			storageContainerName: this.container.name,
 			type: 'Block',
 		});
 	}
