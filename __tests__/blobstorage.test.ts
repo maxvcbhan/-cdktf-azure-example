@@ -7,6 +7,9 @@ import {
 	StorageContainer,
 } from '@cdktf/provider-azurerm';
 
+const dotenv = require('dotenv');
+dotenv.config({ path: '.development.env' });
+console.log(process.env);
 describe('My CDKTF Application', () => {
 
 	describe('Block storage', () => {
@@ -34,10 +37,7 @@ describe('My CDKTF Application', () => {
 				type: 'Block',
 			});
 		});
-
 	});
-
-
 });
 describe('Unit testing using snapshots', () => {
 	it('Tests the blob storage snapshot', () => {
@@ -87,3 +87,5 @@ describe('Unit testing using snapshots', () => {
 `);
 	});
 });
+
+

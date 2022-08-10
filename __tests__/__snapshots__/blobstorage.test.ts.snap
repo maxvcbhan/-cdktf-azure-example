@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Unit testing using snapshots Tests the snapshot 1`] = `
+"{
+  \\"provider\\": {
+    \\"azurerm\\": [
+      {
+        \\"features\\": {
+        },
+        \\"subscription_id\\": \\"mock-subscription-id\\"
+      }
+    ]
+  },
+  \\"terraform\\": {
+    \\"required_providers\\": {
+      \\"azurerm\\": {
+        \\"source\\": \\"azurerm\\",
+        \\"version\\": \\"3.12.0\\"
+      }
+    }
+  }
+}"
+`;
