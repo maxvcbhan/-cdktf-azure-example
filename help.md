@@ -23,7 +23,7 @@
     cdktf destroy [stack] Destroy the stack
 
   Test:
-    npm run test        Runs unit tests (edit __tests__/main-test.ts to add your own tests)
+    npm run test        Runs unit tests (edit __tests__/main-stack-test.ts to add your own tests)
     npm run test:watch  Watches the tests and reruns them on change
 
   Upgrades:
