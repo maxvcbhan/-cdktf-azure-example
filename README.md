@@ -1,4 +1,4 @@
-# CDKTF Azure 
+# CDKTF Azure example
 
 
 
