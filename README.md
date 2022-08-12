@@ -8,7 +8,7 @@
 this app use remote backend state to store the terraform state in azure blob storage
 
 ## use local terraform state store instead of remote backend
-comment is code block in baseconfig.tf class
+comment this code block in baseconfig.tf class
 ```typescript
 		new AzurermBackend(this, {
 			storageAccountName: 'tfstate2762',
